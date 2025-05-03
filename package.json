@@ -1,0 +1,37 @@
+{
+  "name": "parrot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Lokprakash-babu/parrot.git",
+  "author": "Lokprakash-babu <lokprakash100@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "jest",
+    "test:bedrock": "node test-bedrock.js",
+    "test:curl": "jest test/curl.test.js",
+    "test:api": "chmod +x test-api.sh && ./test-api.sh"
+  },
+  "dependencies": {
+    "@aws-sdk/client-bedrock": "^3.800.0",
+    "@aws-sdk/client-bedrock-agent-runtime": "^3.800.0",
+    "@aws-sdk/client-bedrock-runtime": "^3.799.0",
+    "body-parser": "^2.2.0",
+    "dotenv": "^16.3.1",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.1",
+    "supertest": "^6.3.3"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/test/**/*.test.js"
+    ],
+    "collectCoverage": true,
+    "coverageDirectory": "coverage"
+  }
+}
