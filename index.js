@@ -43,7 +43,6 @@ const MODELS = {
       ],
     }),
     extractResponse: (responseBody) => {
-      console.log("CLAUDE response body:", responseBody);
       if (responseBody.content && responseBody.content.length > 0) {
         return responseBody.content[0].text.trim();
       } else if (responseBody.completion) {
@@ -83,7 +82,10 @@ app.get("/health", (req, res) => {
 async function rephraseMessage(tone, message, res, next) {
   try {
     if (!message || message.trim() === "") {
-      return res.send("Please provide a message to rephrase.");
+      return res.json({
+        response_type: "ephemeral",
+        text: "Please provide a message to rephrase.",
+      });
     }
 
     const prompt = `Rephrase the following message to improve ${tone}:\n"${message}". Strictly include only the following
@@ -112,8 +114,11 @@ async function rephraseMessage(tone, message, res, next) {
     // Extract the response based on the selected model
     const rephrased = MODEL.extractResponse(responseBody);
 
-    // Return only the rephrased text without any additional formatting
-    res.json({ text: rephrased });
+    // Return the rephrased text as an ephemeral message (only visible to the user who triggered it)
+    res.json({
+      response_type: "ephemeral",
+      text: rephrased,
+    });
   } catch (err) {
     console.error("Error details:", JSON.stringify(err, null, 2));
     next(err);
@@ -143,16 +148,21 @@ app.post("/simple", async (req, res, next) => {
 
 // 404 handler
 app.use((req, res) => {
-  res.status(404).json({ error: "Not found" });
+  res.status(200).json({
+    response_type: "ephemeral",
+    text: "Command not found. Available commands: /polite, /clarity, /simple",
+  });
 });
 
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error("Error:", err);
-  res.status(500).json({
-    error: "Failed to process request",
-    message:
-      process.env.NODE_ENV === "production" ? "An error occurred" : err.message,
+  res.status(200).json({
+    response_type: "ephemeral",
+    text:
+      process.env.NODE_ENV === "production"
+        ? "Sorry, something went wrong. Please try again later."
+        : `Error: ${err.message}`,
   });
 });
 
