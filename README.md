@@ -12,8 +12,6 @@ This is a Slack bot that rephrases messages using AWS Bedrock's AI models to imp
 
 - Powered by AWS Bedrock AI models:
   - Claude (Anthropic)
-  - Titan (Amazon)
-  - Llama 2 (Meta)
 
 ## Setup
 
@@ -26,7 +24,7 @@ This is a Slack bot that rephrases messages using AWS Bedrock's AI models to imp
 ### AWS Bedrock Setup
 
 1. Enable AWS Bedrock in your AWS account
-2. Request access to the models you want to use (Claude, Titan, Llama 2)
+2. Request access to the models you want to use (Claude)
 3. Set up AWS credentials on your machine or deployment environment
 
 ### Installation
