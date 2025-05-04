@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const express = require("express");
 const bodyParser = require("body-parser");
-
+const axios = require("axios");
 // Import the Bedrock Runtime client for Claude models
 const {
   BedrockRuntimeClient,
@@ -134,6 +134,30 @@ app.post("/simple", async (req, res, next) => {
   await rephraseMessage(tone, message, res, next);
 });
 
+app.get("/slack/oauth/callback", async (req, res) => {
+  const code = req.query.code;
+  try {
+    const resp = await axios.post(
+      "https://slack.com/api/oauth.v2.access",
+      null,
+      {
+        params: {
+          code,
+          client_id: process.env.SLACK_CLIENT_ID,
+          client_secret: process.env.SLACK_CLIENT_SECRET,
+          redirect_uri: process.env.REDIRECT_URI,
+        },
+      }
+    );
+    if (!resp.data.ok) {
+      return res.status(400).send(`OAuth Error: ${resp.data.error}`);
+    }
+    res.send("✅ App installed!");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal OAuth Error");
+  }
+});
 // 404 handler
 app.use((req, res) => {
   res.status(200).json({
