@@ -52,22 +52,10 @@ const MODELS = {
       }
     },
   },
-  LLAMA: {
-    id: "meta.llama3-8b-instruct-v1:0",
-    formatPrompt: (prompt) => ({
-      prompt: `\n\nHuman: ${prompt}\n\nAssistant:`,
-      temperature: 0.7,
-      top_p: 0.9,
-    }),
-    extractResponse: (responseBody) => {
-      return responseBody.generation.trim();
-    },
-  },
 };
 
 // Select the model to use based on environment variable or default to CLAUDE
-const defaultModel = process.env.DEFAULT_MODEL || "CLAUDE";
-const MODEL = MODELS[defaultModel] || MODELS.CLAUDE;
+const MODEL = MODELS.CLAUDE;
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));

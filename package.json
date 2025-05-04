@@ -8,10 +8,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "jest",
-    "test:bedrock": "node test-bedrock.js",
-    "test:curl": "jest test/curl.test.js",
-    "test:api": "chmod +x test-api.sh && ./test-api.sh"
+    "test": "jest"
   },
   "dependencies": {
     "@aws-sdk/client-bedrock": "^3.800.0",

@@ -65,23 +65,6 @@ node index.js
 
 The server will start on port 3000 by default.
 
-### Testing AWS Bedrock Integration
-
-Run the test script to verify AWS Bedrock integration:
-
-```
-node test-bedrock.js
-```
-
-## Slack App Configuration
-
-1. Create a new Slack app at https://api.slack.com/apps
-2. Under "Slash Commands", create three commands:
-   - `/polite` - Points to `https://your-server-url/polite`
-   - `/clarity` - Points to `https://your-server-url/clarity`
-   - `/simple` - Points to `https://your-server-url/simple`
-3. Install the app to your workspace
-
 ## Usage
 
 In Slack, use any of the slash commands followed by the text you want to rephrase:
@@ -149,7 +132,7 @@ curl -X GET http://localhost:3000/health
 ```bash
 curl -X POST http://localhost:3000/polite \
   -H "Content-Type: application/json" \
-  -d "command=/polite&text=Fix this now!"
+  -d "text=/polite&text=Fix this now!"
 ```
 
 #### Clarity Endpoint
@@ -157,7 +140,7 @@ curl -X POST http://localhost:3000/polite \
 ```bash
 curl -X POST http://localhost:3000/clarity \
   -H "Content-Type: application/json" \
-  -d "command=/clarity&text=The thing we talked about needs attention."
+  -d "text=/clarity&text=The thing we talked about needs attention."
 ```
 
 #### Simple Endpoint
@@ -165,7 +148,7 @@ curl -X POST http://localhost:3000/clarity \
 ```bash
 curl -X POST http://localhost:3000/simple \
   -H "Content-Type: application/json" \
-  -d "command=/simple&text=The implementation of the functionality requires additional consideration."
+  -d "text=/simple&text=The implementation of the functionality requires additional consideration."
 ```
 
 For more detailed examples and error cases, see the [curl-examples.md](curl-examples.md) file.
